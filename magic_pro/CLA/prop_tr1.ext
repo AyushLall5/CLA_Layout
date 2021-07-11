@@ -1,0 +1,37 @@
+timestamp 1618602378
+version 8.2
+tech scmos
+style TSMC0.18um(tsmc18)from:t11b
+scale 1000 1 9
+resistclasses 6700 7500 929000 929000 1 7700 7700 80 80 80 70 70 40
+use and_tr1 and_tr1_0 0 -1 173 1 0 0
+use xor_tr1 xor_tr1_0 1 0 32 0 1 -352
+node "pout" 0 56.8128 354 -270 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 72 34 0 0 0 0 0 0 0 0 0 0
+node "m1_167_n18#" 0 129.006 167 -18 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 180 72 0 0 0 0 0 0 0 0 0 0
+node "m1_2_n187#" 3 928.383 2 -187 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1410 482 0 0 0 0 0 0 0 0 0 0
+node "gout" 0 27.9375 82 148 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 25 20 0 0 0 0 0 0 0 0 0 0
+node "p1" 520 792.67 95 -107 p 0 0 0 0 0 0 0 0 0 0 270 274 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+node "p2" 557 1812.15 95 58 pc 0 0 0 0 0 0 0 0 0 0 334 314 0 0 1226 520 0 0 0 0 0 0 0 0 0 0
+cap "xor_tr1_0/a_69_67#" "xor_tr1_0/nand_tr_0/a_30_7#" 151.359
+cap "p2" "xor_tr1_0/nand_tr_0/vdd" 115.911
+cap "p2" "xor_tr1_0/a_109_86#" 252.519
+subcap "p1" -105.44
+subcap "p1" -247.13
+cap "p2" "p1" 102.798
+cap "and_tr1_0/nand_tr_0/a_30_7#" "p2" 13.746
+cap "p2" "and_tr1_0/nand_tr_0/a_28_n84#" 76.572
+cap "p2" "and_tr1_0/nand_tr_0/gnd" 57.7332
+subcap "p2" -1518.49
+cap "and_tr1_0/nand_tr_0/a_67_n84#" "and_tr1_0/first_0/a_93_n11#" 109.968
+subcap "p2" -1702.04
+subcap "gout" -1.4265
+merge "and_tr1_0/nand_tr_0/vdd" "xor_tr1_0/nand_tr_0/vdd" -275.396 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -396 -150 0 0 0 0 0 0 0 0 0 0
+merge "xor_tr1_0/nand_tr_0/vdd" "m1_2_n187#"
+merge "xor_tr1_0/gnd" "and_tr1_0/nand_tr_0/gnd" -129.006 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -180 -72 0 0 0 0 0 0 0 0 0 0
+merge "and_tr1_0/nand_tr_0/gnd" "m1_167_n18#"
+merge "and_tr1_0/nand_tr_0/a_28_n84#" "xor_tr1_0/a_28_149#" -19.15 0 0 0 0 0 0 0 0 0 0 2 -10 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+merge "xor_tr1_0/a_28_149#" "p1"
+merge "xor_tr1_0/out" "pout" -20.5632 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -8 -18 0 0 0 0 0 0 0 0 0 0
+merge "and_tr1_0/first_0/a_100_n34#" "gout" -15.6075 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -5 -14 0 0 0 0 0 0 0 0 0 0
+merge "and_tr1_0/nand_tr_0/a_67_n84#" "xor_tr1_0/a_69_67#" -763.861 0 0 0 0 0 0 0 0 0 0 -30 -26 0 0 -676 -480 0 0 0 0 0 0 0 0 0 0
+merge "xor_tr1_0/a_69_67#" "p2"

@@ -1,0 +1,17 @@
+timestamp 1618598270
+version 8.2
+tech scmos
+style TSMC0.18um(tsmc18)from:t11b
+scale 1000 1 9
+resistclasses 6700 7500 929000 929000 1 7700 7700 80 80 80 70 70 40
+use nand_tr nand_tr_0 1 0 0 0 1 100
+use first first_0 1 0 23 0 1 97
+node "m1_84_0#" 1 273.402 84 0 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 377 154 0 0 0 0 0 0 0 0 0 0
+node "m1_83_86#" 0 81.69 83 86 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 100 50 0 0 0 0 0 0 0 0 0 0
+node "m1_84_167#" 0 103.191 84 167 m1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 130 62 0 0 0 0 0 0 0 0 0 0
+merge "first_0/gnd" "nand_tr_0/gnd" -29.211 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -10 -26 0 0 0 0 0 0 0 0 0 0
+merge "nand_tr_0/gnd" "m1_84_0#"
+merge "first_0/vdd" "nand_tr_0/vdd" -24.8871 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -9 -22 0 0 0 0 0 0 0 0 0 0
+merge "nand_tr_0/vdd" "m1_84_167#"
+merge "first_0/a_93_n11#" "nand_tr_0/a_30_7#" -24.048 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -24 0 0 0 0 0 0 0 0 0 0
+merge "nand_tr_0/a_30_7#" "m1_83_86#"

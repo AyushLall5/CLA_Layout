@@ -1,0 +1,151 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param w = {20*LAMBDA}
+.param width_P={2*w}
+.param width_N={2*w}
+.global gnd vdd
+
+Vdd	vdd	gnd	'SUPPLY'
+
+vin1 D  0 pulse 0 0  0n 100p 100p 30n 500n
+vin6 D1 0 pulse 0 1.8   0n 100p 100p 30n 500n
+vin7 D2 0 pulse 0 0   0n 100p 100p 30n 500n
+vin8 D3 0 pulse 0 1.8 0n 100p 100p 30n 500n
+
+vin9 Db   0 pulse 0 1.8   0n 100p 100p 30n 500n
+vin10 Db1 0 pulse 0 0   0n 100p 100p 30n 500n
+vin11 Db2 0 pulse 0 1.8 0n 100p 100p 30n 500n
+vin12 Db3 0 pulse 0 1.8 0n 100p 100p 30n 500n
+
+vin_carry cinp 0 0
+
+.subckt nand A B out vdd gnd
+M1      out       A       k     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M2      out       A       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+M3      k       B       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M4      out       B       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends nand
+
+.subckt inv yi xi vdd gnd
+M1      yi       xi       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+M2      yi       xi       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+
+***********XOR gate*******************
+.subckt xor da db outx vdd gnd
+xx1 da db outx1 vdd gnd nand
+xx2 da outx1 outx2 vdd gnd nand
+xx3 db outx1 outx3 vdd gnd nand
+xx4 outx2 outx3 outx vdd gnd nand
+.ends xor  
+
+**************AND GATE*******************
+.subckt and_g in1 in2 aout vdd gnd
+xx5 in1 in2 out_nan vdd gnd nand
+xx6 aout out_nan  vdd gnd inv
+.ends and_g
+
+*****************OR GATE*****************
+.subckt or_g inn1 inn2 orout vdd gnd
+xx7 ou1 inn1 vdd gnd inv
+xx8 ou2 inn2 vdd gnd inv
+xx9 ou1 ou2 orout vdd gnd nand
+.ends or_g
+
+
+
+**********************Generate*********************
+
+x40 D  Db   g0 vdd gnd and_g
+x41 D1 Db1  g1 vdd gnd and_g
+x42 D2 Db2  g2 vdd gnd and_g
+x43 D3 Db3  g3 vdd gnd and_g
+
+**********************Propagate********************
+x44 D   Db   p0 vdd gnd xor
+x45 D1  Db1  p1 vdd gnd xor
+x46 D2  Db2  p2 vdd gnd xor
+x47 D3  Db3  p3 vdd gnd xor
+
+**********************carry************************
+******c1*********
+x148 p0 cinp ccout1 vdd gnd and_g
+x149 ccout1 g0 c1 vdd gnd or_g
+
+******c2*********
+x150 cinp p1 ccout2 vdd gnd and_g
+x151 ccout2 p0 ccout3 vdd gnd and_g 
+x152 p1 g0 ccout4 vdd gnd and_g 
+x153 ccout4 ccout3 ccout5 vdd gnd or_g
+x154 ccout5 g1 c2 vdd gnd or_g 
+
+******c3*********
+x155 g1 p2 ccout6 vdd gnd and_g 
+x156 p2 p1 ccout7 vdd gnd and_g 
+x157 ccout7 g0 ccout8 vdd gnd and_g 
+x158 p2 p1 ccout9 vdd gnd and_g
+x159 ccout9 p0 ccout10 vdd gnd and_g
+x160 ccout10 cinp ccout11 vdd gnd and_g 
+x161 ccout6 ccout8 ccout12 vdd gnd or_g 
+x162 ccout11 g2 ccout13 vdd gnd or_g
+x163 ccout12 ccout13 c3 vdd gnd or_g 
+
+******c4*********
+x164 cinp p0 ccout14 vdd gnd and_g
+x165 ccout14 p1 ccout15 vdd gnd and_g
+x166 ccout15 p2 ccout16 vdd gnd and_g
+x167 ccout16 p3 ccout17 vdd gnd and_g 
+x168 p3 p2 ccout18 vdd gnd and_g
+x169 p1 ccout18 ccout19 vdd gnd and_g
+x170 ccout19 g0 ccout20 vdd gnd and_g 
+x171 p3 p2 ccout21 vdd gnd and_g
+x172 g1 ccout21 ccout22 vdd gnd and_g 
+x173 g2 p3 ccout23 vdd gnd and_g 
+x174 ccout17 ccout20 ccout24 vdd gnd or_g 
+x175 ccout22 ccout23 ccout25 vdd gnd or_g 
+x176 ccout25 ccout24 ccout26 vdd gnd or_g
+x177 ccout26 g3 c4 vdd gnd or_g
+
+
+***************sum*******************************
+x56 cinp p0 s0 vdd gnd xor
+x57 c1 p1 s1 vdd gnd xor
+x58 c2 p2 s2 vdd gnd xor
+x59 c3 p3 s3 vdd gnd xor
+
+
+
+
+
+.tran 0.1n 100n
+
+.control
+set hcopypscolor = 1
+set color0=white
+set color1=black
+
+run
+set curplottitle="Ayush-2020122001"
+
+*plot v(s_bar)
+plot v(s0)
+*plot v(Db)
+*plot v(D)
+plot v(D) v(Db)
+*plot v(outs0)
+*plot v(c4)
+set hcopypscolor = 1
+hardcopy input.eps v(D) v(Db)
+hardcopy output.eps v(s0) 
+.endc

@@ -1,0 +1,360 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param w = {20*LAMBDA}
+.param width_P={2*w}
+.param width_N={2*w}
+.global gnd vdd
+
+Vdd	vdd	gnd	'SUPPLY'
+
+
+*vin1 D  0 pulse 0 1.8 0n 100p 100p 30n 300n
+*vin2 D1 0 pulse 31.1 1.8 0n 100p 100p 60 300n
+*vin3 D2 0 pulse 0 1.8 0n 100p 100p 29.9n 60n
+*vin4 D3 0 pwl (0 0v 49.9ns 0v 50ns 1.8v 100ns 1.8v)
+*vin4 D3 0 pulse 0 1.8 0n 100p 100p 29.9n 60n
+
+
+*vin5 Db  0 0
+*vin6 Db1 0 0
+*vin7 Db2 0 0
+*vin8 Db3 0 0
+**********************************************************************
+vin1 D  0 pulse 0 0  0n 100p 100p 30n 500n
+vin6 D1 0 pulse 0 1.8  0n 100p 100p 30n 500n
+vin7 D2 0 pulse 0 1.8  0n 100p 100p 30n 500n
+vin8 D3 0 pulse 0 0  0n 100p 100p 30n 500n
+
+
+vin9 Db   0 pulse 0 0   0n 100p 10p 30n 500n
+vin10 Db1 0 pulse 0 0   0n 100p 10p 30n 500n
+vin11 Db2 0 pulse 0 1.8   0n 100p 10p 30n 500n
+vin12 Db3 0 pulse 0 0   0n 100p 10p 30n 500n
+
+
+*vin_clk clk 0 pulse 0 1.8 0.044n 100p 100p .2n .4n
+vin_clk clk 0 pulse 0 1.8 0.2n 100p 100p 20n 40n
+vin_carry cinp 0 pulse 0 0 0n 100p 10p 30n 500n
+
+.subckt nand A B out vdd gnd
+M1      out       A       k     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M2      out       A       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+M3      k       B       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M4      out       B       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends nand
+
+.subckt inv yi xi vdd gnd
+M1      yi       xi       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+M2      yi       xi       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+******************************************************A***********************************
+*********************DFF1*************************
+x1 ox4 A0_bar A0 vdd gnd nand
+x2 ox5 A0 A0_bar vdd gnd nand 
+x3 ox6 ox4 ox3 vdd gnd nand
+x4 ox3 clk ox4 vdd gnd nand
+x7 ox4 clk ox7 vdd gnd nand
+x8 ox8 ox7 vdd gnd inv
+x5 ox8 ox6 ox5 vdd gnd nand 
+x6 D ox5 ox6 vdd gnd nand
+********************************************************
+
+*********************DFF2*************************
+*** inverter***
+x15 ox9 A1_bar A1 vdd gnd nand
+x16 ox10 A1 A1_bar vdd gnd nand 
+x12 ox11 ox9 ox12 vdd gnd nand
+x9 ox12 clk ox9 vdd gnd nand
+x14 ox9 clk ox14 vdd gnd nand
+x13 ox13 ox14 vdd gnd inv
+x10 ox13 ox11 ox10 vdd gnd nand 
+x11 D1 ox10 ox11 vdd gnd nand
+********************************************************
+
+*********************DFF3*************************
+x24 ox17 A2_bar A2 vdd gnd nand
+x23 ox18 A2 A2_bar vdd gnd nand 
+x22 ox19 ox17 ox22 vdd gnd nand
+x17 ox22 clk ox17 vdd gnd nand
+x20 ox17 clk ox20 vdd gnd nand
+x21 ox21 ox20 vdd gnd inv
+x18 ox21 ox19 ox18 vdd gnd nand 
+x19 D2 ox18 ox19 vdd gnd nand
+********************************************************
+
+*********************DFF4*************************
+x33 ox25 A3_bar A3 vdd gnd nand
+x32 ox27 A3 A3_bar vdd gnd nand 
+x31 ox28 ox25 ox31 vdd gnd nand
+x25 ox31 clk ox25 vdd gnd nand
+x29 ox25 clk ox29 vdd gnd nand
+x30 ox30 ox29 vdd gnd inv
+x27 ox30 ox28 ox27 vdd gnd nand 
+x28 D3 ox27 ox28 vdd gnd nand
+********************************************************
+******************************************************************************************
+
+
+
+
+******************************************************B***********************************
+*********************DFFb1*************************
+x41 ox35 B0_bar B0 vdd gnd nand
+x40 ox36 B0 B0_bar vdd gnd nand 
+x34 ox37 ox35 ox34 vdd gnd nand
+x35 ox34 clk ox35 vdd gnd nand
+x38 ox35 clk ox38 vdd gnd nand
+x39 ox39 ox38 vdd gnd inv
+x36 ox39 ox37 ox36 vdd gnd nand 
+x37 Db ox36 ox37 vdd gnd nand 
+********************************************************
+
+*********************DFFb2*************************
+x51 ox42 B1_bar B1 vdd gnd nand
+x50 ox43 B1 B1_bar vdd gnd nand 
+x49 ox46 ox42 ox49 vdd gnd nand
+x42 ox49 clk ox42 vdd gnd nand
+x47 ox42 clk ox47 vdd gnd nand
+x48 ox48 ox47 vdd gnd inv
+x43 ox48 ox46 ox43 vdd gnd nand 
+x46 Db1 ox43 ox46 vdd gnd nand
+********************************************************
+
+*********************DFFb3*************************
+x60 ox54 B2_bar B2 vdd gnd nand
+x59 ox52 B2 B2_bar vdd gnd nand 
+x53 ox56 ox54 ox53 vdd gnd nand
+x54 ox53 clk ox54 vdd gnd nand
+x57 ox54 clk ox57 vdd gnd nand
+x58 ox58 ox57 vdd gnd inv
+x52 ox58 ox56 ox52 vdd gnd nand 
+x56 Db2 ox52 ox56 vdd gnd nand
+********************************************************
+
+*********************DFFb4*************************
+x61 ox64 B3_bar B3 vdd gnd nand
+x62 ox65 B3 B3_bar vdd gnd nand 
+x63 ox66 ox64 ox63 vdd gnd nand
+x64 ox63 clk ox64 vdd gnd nand
+x67 ox64 clk ox67 vdd gnd nand
+x68 ox68 ox67 vdd gnd inv
+x65 ox68 ox66 ox65 vdd gnd nand 
+x66 Db3 ox65 ox66 vdd gnd nand
+******************************************************************************************
+
+
+
+*********************DFFcarr*************************
+x71 ox74 car0_bar car0 vdd gnd nand
+x72 ox75 car0 car0_bar vdd gnd nand 
+x73 ox76 ox74 ox73 vdd gnd nand
+x74 ox73 clk ox74 vdd gnd nand
+x77 ox74 clk ox77 vdd gnd nand
+x78 ox78 ox77 vdd gnd inv
+x75 ox78 ox76 ox75 vdd gnd nand 
+x76 cinp ox75 ox76 vdd gnd nand
+
+
+
+
+***********XOR gate*******************
+.subckt xor dda ddb outx vdd gnd
+xx1 dda ddb outx1 vdd gnd nand
+xx2 dda outx1 outx2 vdd gnd nand
+xx3 ddb outx1 outx3 vdd gnd nand
+xx4 outx2 outx3 outx vdd gnd nand
+.ends xor  
+
+**************AND GATE*******************
+.subckt and_g in1 in2 aout vdd gnd
+xx5 in1 in2 out_nan vdd gnd nand
+xx6 aout out_nan  vdd gnd inv
+.ends and_g
+
+*****************OR GATE*****************
+.subckt or_g inn1 inn2 orout vdd gnd
+xx7 ou1 inn1 vdd gnd inv
+xx8 ou2 inn2 vdd gnd inv
+xx9 ou1 ou2 orout vdd gnd nand
+.ends or_g
+
+
+
+**********************Generate*********************
+
+x140 A0 B0   g0 vdd gnd and_g
+x141 A1 B1  g1 vdd gnd and_g
+x142 A2 B2  g2 vdd gnd and_g
+x143 A3 B3  g3 vdd gnd and_g
+
+**********************Propagate********************
+x144 A0   B0   p0 vdd gnd xor
+x145 A1  B1  p1 vdd gnd xor
+x146 A2  B2  p2 vdd gnd xor
+x147 A3  B3  p3 vdd gnd xor
+
+**********************carry************************
+******c1*********
+x148 p0 car0 ccout1 vdd gnd and_g
+x149 ccout1 g0 c1 vdd gnd or_g
+
+******c2*********
+x150 car0 p1 ccout2 vdd gnd and_g
+x151 ccout2 p0 ccout3 vdd gnd and_g 
+x152 p1 g0 ccout4 vdd gnd and_g 
+x153 ccout4 ccout3 ccout5 vdd gnd or_g
+x154 ccout5 g1 c2 vdd gnd or_g 
+
+******c3*********
+x155 g1 p2 ccout6 vdd gnd and_g 
+x156 p2 p1 ccout7 vdd gnd and_g 
+x157 ccout7 g0 ccout8 vdd gnd and_g 
+x158 p2 p1 ccout9 vdd gnd and_g
+x159 ccout9 p0 ccout10 vdd gnd and_g
+x160 ccout10 car0 ccout11 vdd gnd and_g 
+x161 ccout6 ccout8 ccout12 vdd gnd or_g 
+x162 ccout11 g2 ccout13 vdd gnd or_g
+x163 ccout12 ccout13 c3 vdd gnd or_g 
+
+******c4*********
+x164 car0 p0 ccout14 vdd gnd and_g
+x165 ccout14 p1 ccout15 vdd gnd and_g
+x166 ccout15 p2 ccout16 vdd gnd and_g
+x167 ccout16 p3 ccout17 vdd gnd and_g 
+x168 p3 p2 ccout18 vdd gnd and_g
+x169 p1 ccout18 ccout19 vdd gnd and_g
+x170 ccout19 g0 ccout20 vdd gnd and_g 
+x171 p3 p2 ccout21 vdd gnd and_g
+x172 g1 ccout21 ccout22 vdd gnd and_g 
+x173 g2 p3 ccout23 vdd gnd and_g 
+x174 ccout17 ccout20 ccout24 vdd gnd or_g 
+x175 ccout22 ccout23 ccout25 vdd gnd or_g 
+x176 ccout25 ccout24 ccout26 vdd gnd or_g
+x177 ccout26 g3 c4 vdd gnd or_g
+
+***************sum*******************************
+x156 car0 p0 s0 vdd gnd xor
+x157 c1 p1 s1 vdd gnd xor
+x158 c2 p2 s2 vdd gnd xor
+x159 c3 p3 s3 vdd gnd xor
+
+
+**************final out ***************************
+*********************DFFs0*************************
+x89 ox84 sf0_bar sf0 vdd gnd nand
+x82 ox85 sf0 sf0_bar vdd gnd nand 
+x83 ox86 ox84 ox83 vdd gnd nand
+x84 ox83 clk ox84 vdd gnd nand
+x87 ox84 clk ox87 vdd gnd nand
+x88 ox88 ox87 vdd gnd inv
+x85 ox88 ox86 ox85 vdd gnd nand 
+x86 s0 ox85 ox86 vdd gnd nand
+********************************************************
+*********************DFFs1*************************
+x91 ox94 sf1_bar sf1 vdd gnd nand
+x92 ox95 sf1 sf1_bar vdd gnd nand 
+x93 ox96 ox94 ox93 vdd gnd nand
+x94 ox93 clk ox94 vdd gnd nand
+x97 ox94 clk ox97 vdd gnd nand
+x98 ox98 ox97 vdd gnd inv
+x95 ox98 ox96 ox95 vdd gnd nand 
+x96 s1 ox95 ox96 vdd gnd nand
+********************************************************
+
+*********************DFFs2*************************
+x101 ox104 sf2_bar sf2 vdd gnd nand
+x102 ox105 sf2 sf2_bar vdd gnd nand 
+x103 ox106 ox104 ox103 vdd gnd nand
+x104 ox103 clk ox104 vdd gnd nand
+x107 ox104 clk ox107 vdd gnd nand
+x108 ox108 ox107 vdd gnd inv
+x105 ox108 ox106 ox105 vdd gnd nand 
+x106 s2 ox105 ox106 vdd gnd nand
+********************************************************
+
+*********************DFFs3*************************
+x111 ox114 sf3_bar sf3 vdd gnd nand
+x112 ox115 sf3 sf3_bar vdd gnd nand 
+x113 ox116 ox114 ox113 vdd gnd nand
+x114 ox113 clk ox114 vdd gnd nand
+x117 ox114 clk ox117 vdd gnd nand
+x118 ox118 ox117 vdd gnd inv
+x115 ox118 ox116 ox115 vdd gnd nand 
+x116 s3 ox115 ox116 vdd gnd nand
+********************************************************
+
+*********************DFFcarr*************************
+x121 ox124 car4_bar car4 vdd gnd nand
+x122 ox125 car4 car4_bar vdd gnd nand 
+x123 ox126 ox124 ox123 vdd gnd nand
+x124 ox123 clk ox124 vdd gnd nand
+x127 ox124 clk ox127 vdd gnd nand
+x128 ox128 ox127 vdd gnd inv
+x125 ox128 ox126 ox125 vdd gnd nand 
+x126 c4 ox125 ox126 vdd gnd nand
+********************************************************
+
+
+.tran 0.1n 130n
+.measure tran tprise_I3
++ TRIG v(sf0) VAL='SUPPLY*0.5' Fall=0
++ TARG v(D) VAL='SUPPLY*0.5' RISE=0
+.measure tran tpfall_I3
++ TRIG v(sf0) VAL='SUPPLY*0.5' RISE=0
++ TARG v(D) VAL='SUPPLY*0.5' FALL=0
+.measure tran tpd_I3 param='(tprise_I3+tpfall_I3)/2' goal=0
+
+.control
+set hcopypscolor = 1
+set color0=white
+set color1=black
+
+run
+set curplottitle="Ayush-2020122001"
+
+*plot v(sf0) v(sf1)+4 v(sf2)+8 v(sf3)+12
+plot v(clk) 
+*plot v(D) v(D1) v(D2) v(D3)
+*plot v(Db) v(Db1) v(Db2) v(Db3)
+*plot v(sf0) v(sf1) v(sf2) v(sf3)  
+*plot v(D) v(outs0) v(Db)
+*plot v(D1)
+*plot v(Db)
+plot v(D) v(Db) v(sf0)
+plot v(D1) v(Db1) v(sf1)
+plot v(D2) v(Db2) v(sf2)
+plot v(D3) v(Db3) v(sf3)
+*plot v(car4)
+*plot v(sf2)
+*plot v(sf1)
+*plot v(Db1)
+*plot v(Db2)
+*plot v(Db3)
+*plot v(c3) v(p3)  
+*plot v(outs1)
+*plot v(outs2) 
+plot v(clk)+16 v(sf3)+12 v(sf2)+8 v(sf1)+4 v(sf0)
+plot v(car4)
+set hcopypscolor = 1
+
+*hardcopy input_a0.eps v(D) v(Db) v(sf0)
+*hardcopy input_a1.eps v(D1) v(Db1) v(sf1)
+*hardcopy input_a2.eps v(D2) v(Db2) v(sf2)
+*hardcopy input_a3.eps v(D3) v(Db3) v(sf3)
+*hardcopy input_car.eps v(car4)
+*hardcopy input_clk.eps v(clk)
+*hardcopy input_inpa.eps v(clk)+16 v(D3)+12 v(D2)+8 v(D1)+4 v(D)
+*hardcopy input_inpb.eps v(clk)+16 v(Db3)+12 v(Db2)+8 v(Db1)+4 v(Db)
+*hardcopy input_out.eps v(clk)+16 v(sf3)+12 v(sf2)+8 v(sf1)+4 v(sf0)
+.endc

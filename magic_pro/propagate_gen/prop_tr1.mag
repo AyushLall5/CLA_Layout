@@ -1,0 +1,35 @@
+magic
+tech scmos
+timestamp 1618602378
+<< polysilicon >>
+rect 97 63 99 67
+rect 95 -107 97 28
+rect 134 -284 136 -154
+<< polycontact >>
+rect 95 58 101 63
+rect 132 -154 138 -148
+<< metal1 >>
+rect 82 148 87 153
+rect 95 41 101 58
+rect 95 37 109 41
+rect 2 -181 8 12
+rect 105 -71 109 37
+rect 167 -18 173 12
+rect 105 -75 138 -71
+rect 132 -148 138 -75
+rect 2 -187 44 -181
+rect 354 -270 363 -262
+use and_tr1  and_tr1_0
+timestamp 1618598270
+transform 0 -1 173 1 0 0
+box 0 0 150 172
+use xor_tr1  xor_tr1_0
+timestamp 1618413659
+transform 1 0 32 0 1 -352
+box 0 -1 354 335
+<< labels >>
+rlabel polysilicon 96 -68 96 -68 1 p1
+rlabel polysilicon 135 -169 135 -169 1 p2
+rlabel metal1 359 -266 359 -266 1 pout
+rlabel metal1 84 151 84 151 5 gout
+<< end >>

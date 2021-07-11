@@ -1,0 +1,121 @@
+* SPICE3 file created from carry_add.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_30_n81# p1 gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=9140 ps=1474
+M1001 a_109_86# p2 a_30_n81# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1002 a_109_86# p1 vdd w_0_0# CMOSP w=40 l=2
++  ad=1480 pd=154 as=18160 ps=3058
+M1003 vdd p2 a_109_86# w_0_0# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 vdd a_154_188# pin_p w_239_99# CMOSP w=40 l=2
++  ad=0 pd=0 as=1480 ps=154
+M1005 pin_p a_154_188# a_269_18# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=1480 ps=154
+M1006 vdd a_109_86# a_154_106# w_124_99# CMOSP w=40 l=2
++  ad=0 pd=0 as=1480 ps=154
+M1007 a_154_188# p1 vdd w_124_179# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1008 a_154_106# a_109_86# a_154_18# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=1480 ps=154
+M1009 vdd a_109_86# a_154_188# w_124_179# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1010 a_154_276# p1 gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1011 a_269_18# a_154_106# gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1012 a_154_188# a_109_86# a_154_276# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1013 a_154_18# p2 gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1014 pin_p a_154_106# vdd w_239_99# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1015 a_154_106# p2 vdd w_124_99# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1016 gout m1_83_86# gnd Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1017 gout m1_83_86# vdd w_86_n4# CMOSP w=50 l=2
++  ad=250 pd=110 as=0 ps=0
+M1018 a_30_n81# p1 gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1019 m1_83_86# p2 a_30_n81# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1020 m1_83_86# p1 vdd w_0_0# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1021 vdd p2 m1_83_86# w_0_0# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1022 a_18_85# gout gnd Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1023 a_18_85# gout vdd w_86_n4# CMOSP w=50 l=2
++  ad=250 pd=110 as=0 ps=0
+M1024 a_30_n81# a_18_85# gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1025 carr_out a_69_95# a_30_n81# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1026 carr_out a_18_85# vdd w_0_0# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1027 vdd a_69_95# carr_out w_0_0# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1028 gnd o_ca a_69_95# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1029 vdd o_ca a_69_95# w_115_92# CMOSP w=50 l=2
++  ad=0 pd=0 as=250 ps=110
+M1030 a_844_66# a_729_154# gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1031 add_out a_729_154# vdd w_814_147# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1032 a_729_154# cin0 vdd w_699_147# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1033 a_399_30# cin0 gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1034 a_729_66# cin0 gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1035 vdd a_729_236# add_out w_814_147# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1036 a_399_69# pin_p a_399_30# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1037 vdd a_605_155# a_729_154# w_699_147# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1038 a_399_69# cin0 vdd w_480_0# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1039 a_605_155# cin0 a_605_67# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=1480 ps=154
+M1040 a_729_236# pin_p vdd w_699_227# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1041 vdd pin_p a_399_69# w_480_0# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1042 add_out a_729_236# a_844_66# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1043 vdd a_605_155# a_729_236# w_699_227# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1044 a_605_155# pin_p vdd w_575_148# CMOSP w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1045 a_729_154# a_605_155# a_729_66# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+M1046 vdd cin0 a_605_155# w_575_148# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1047 o_ca a_399_69# gnd Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1048 a_729_324# pin_p gnd Gnd CMOSN w=40 l=2
++  ad=1480 pd=154 as=0 ps=0
+M1049 o_ca a_399_69# vdd w_473_109# CMOSP w=50 l=2
++  ad=75 pd=35 as=0 ps=0
+M1050 a_605_67# pin_p gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1051 a_729_236# a_605_155# a_729_324# Gnd CMOSN w=40 l=2
++  ad=760 pd=118 as=0 ps=0
+C0 cin0 Gnd 3.05fF
+C1 a_605_155# Gnd 2.38fF
+C2 w_480_0# Gnd 5.46fF
+C3 w_814_147# Gnd 5.46fF
+C4 w_699_147# Gnd 5.46fF
+C5 w_575_148# Gnd 5.46fF
+C6 w_699_227# Gnd 5.46fF
+C7 gnd Gnd 3.73fF
+C8 w_0_0# Gnd 5.46fF
+C9 w_0_0# Gnd 5.46fF
+C10 vdd Gnd 3.19fF
+C11 w_239_99# Gnd 5.46fF
+C12 w_0_0# Gnd 5.46fF

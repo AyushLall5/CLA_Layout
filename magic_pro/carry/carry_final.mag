@@ -1,0 +1,117 @@
+magic
+tech scmos
+timestamp 1618603789
+<< nwell >>
+rect 473 109 552 134
+rect 480 0 536 97
+<< ntransistor >>
+rect 443 121 463 123
+rect 399 67 439 69
+rect 399 28 439 30
+<< ptransistor >>
+rect 485 121 535 123
+rect 487 67 527 69
+rect 487 28 527 30
+<< ndiffusion >>
+rect 443 123 463 124
+rect 443 120 463 121
+rect 399 84 439 88
+rect 399 77 401 84
+rect 399 69 439 77
+rect 399 30 439 67
+rect 399 18 439 28
+rect 399 11 401 18
+rect 399 8 439 11
+<< pdiffusion >>
+rect 485 123 535 124
+rect 485 120 535 121
+rect 487 85 527 88
+rect 525 78 527 85
+rect 487 69 527 78
+rect 487 52 527 67
+rect 525 45 527 52
+rect 487 30 527 45
+rect 487 18 527 28
+rect 525 11 527 18
+rect 487 8 527 11
+<< ndcontact >>
+rect 443 124 463 128
+rect 443 116 463 120
+rect 401 77 439 84
+rect 401 11 439 18
+<< pdcontact >>
+rect 485 124 535 128
+rect 485 116 535 120
+rect 487 78 525 85
+rect 487 45 525 52
+rect 487 11 525 18
+<< psubstratepcontact >>
+rect 380 39 386 47
+<< nsubstratencontact >>
+rect 545 27 551 35
+<< polysilicon >>
+rect 440 121 443 123
+rect 463 121 485 123
+rect 535 121 538 123
+rect 373 86 392 88
+rect 390 69 392 86
+rect 390 67 399 69
+rect 439 67 487 69
+rect 527 67 530 69
+rect 396 28 399 30
+rect 439 28 487 30
+rect 527 28 530 30
+rect 456 20 458 28
+<< polycontact >>
+rect 466 116 471 121
+rect 368 83 373 91
+<< metal1 >>
+rect 81 521 481 527
+rect 81 500 86 521
+rect 476 375 481 521
+rect 475 215 482 219
+rect 384 178 392 205
+rect 476 156 481 161
+rect 466 152 481 156
+rect 434 120 439 150
+rect 466 128 471 152
+rect 463 124 485 128
+rect 434 116 443 120
+rect 547 120 552 134
+rect 535 116 552 120
+rect 434 106 439 116
+rect 380 101 439 106
+rect 361 83 368 91
+rect 380 47 386 101
+rect 466 84 471 116
+rect 547 85 552 116
+rect 439 77 471 84
+rect 525 78 552 85
+rect 464 52 471 77
+rect 464 45 487 52
+rect 380 18 386 39
+rect 545 35 552 78
+rect 551 27 552 35
+rect 545 18 552 27
+rect 380 11 401 18
+rect 525 11 552 18
+rect 380 0 386 11
+rect 545 0 552 11
+use prop_tr1  prop_tr1_0
+timestamp 1618602378
+transform 1 0 -1 0 1 353
+box 1 -353 386 153
+use or_tr2  or_tr2_0
+timestamp 1618345886
+transform 0 1 391 -1 0 307
+box -70 0 147 171
+<< labels >>
+rlabel metal1 383 67 383 67 3 gnd
+rlabel metal1 548 59 548 59 7 vdd
+rlabel metal1 435 119 435 119 3 gnd
+rlabel metal1 549 118 549 118 7 vdd
+rlabel polysilicon 457 22 457 22 1 cin0
+rlabel metal1 468 148 468 148 1 o_ca
+rlabel metal1 366 87 366 87 1 pin_p
+rlabel metal1 478 216 478 216 1 carr_out
+<< end >>

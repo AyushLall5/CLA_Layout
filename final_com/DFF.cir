@@ -1,0 +1,93 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param w = {20*LAMBDA}
+.param width_P={2*w}
+.param width_N={2*w}
+.global gnd vdd
+
+Vdd	vdd	gnd	'SUPPLY'
+vin1 D 0 pulse 1.8 0 0n 100p 100p 40.04n 60n
+vin2 clk 0 pulse 0 1.8 .044n 100p 100p 20n 40n
+
+
+.subckt nand A B out vdd gnd
+M1      out       A       k     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M2      out       A       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+M3      k       B       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M4      out       B       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends nand
+
+
+.subckt three_nand A B C out vdd gnd
+M1      out       A       k     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M2      out       A       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+M3      k       B       p     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M4      out       B       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+M5      p       C       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M6      out       C       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends three_nand
+
+.subckt inv yi xi vdd gnd
+M1      yi       xi       gnd     gnd  CMOSN   W={width_N}   L={2*LAMBDA}
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+M2      yi       xi       vdd     vdd  CMOSP   W={width_P}   L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+
+
+
+
+x1 ox4 A0_bar A0 vdd gnd nand
+x2 ox5 A0 A0_bar vdd gnd nand 
+x3 ox6 ox4 ox3 vdd gnd nand
+x4 ox3 clk ox4 vdd gnd nand
+x7 ox4 clk ox7 vdd gnd nand
+x8 ox8 ox7 vdd gnd inv
+x5 ox8 ox6 ox5 vdd gnd nand 
+x6 D ox5 ox6 vdd gnd nand
+
+
+
+
+*x5 ox4 ox6 clk ox5 vdd gnd three_nand 
+
+
+.tran 0.1n 100n
+
+.control
+set hcopypscolor = 1
+set color0=white
+set color1=black
+
+run
+set curplottitle="Ayush-2020122001"
+
+*plot v(s_bar)
+plot v(clk)
+plot v(D)
+plot v(A0)
+set hcopypscolor = 1
+*hardcopy DFF_input.eps v(D)
+*hardcopy DFF_clock.eps v(clk)
+*hardcopy DFF_output.eps v(A0)
+.endc
